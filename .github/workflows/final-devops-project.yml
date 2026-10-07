@@ -5,20 +5,20 @@
 #               ├─ secret-scan ───┼─ security-gate ─ push-ghcr ─ deploy-kind
 #               └─ docker-build-scan ┘
 #
-# Portability: everything lives under PROJECT_DIR. In the standalone repository set
-# PROJECT_DIR to "." and drop the "DevOps-main/final-devops-project/" prefix from `paths:`.
+# Standalone copy of DevOps/DevOps-main/final-devops-project: PROJECT_DIR is "." here and
+# images are published as devops-final-project-{backend,frontend} so they belong to this repo.
 name: Final Project - StockPilot CI/CD
 
 on:
   push:
     branches: [main]
     paths:
-      - "DevOps-main/final-devops-project/**"
+      - "**"
       - ".github/workflows/final-devops-project.yml"
   pull_request:
     branches: [main]
     paths:
-      - "DevOps-main/final-devops-project/**"
+      - "**"
       - ".github/workflows/final-devops-project.yml"
   workflow_dispatch:
 
@@ -30,12 +30,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PROJECT_DIR: DevOps-main/final-devops-project
+  PROJECT_DIR: "."
   PYTHON_VERSION: "3.12"
   NODE_VERSION: "22"
   REGISTRY: ghcr.io
-  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/stockpilot-backend
-  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/stockpilot-frontend
+  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/devops-final-project-backend
+  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/devops-final-project-frontend
   # Trivy runs from its official image pinned to a known-good release. The trivy-action /
   # setup-trivy actions are deliberately not used (March 2026 supply-chain compromise).
   TRIVY_IMAGE: aquasec/trivy:0.75.0
@@ -324,7 +324,7 @@ jobs:
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for img in stockpilot-backend stockpilot-frontend; do
+          for img in devops-final-project-backend devops-final-project-frontend; do
             ref="ghcr.io/${{ github.repository_owner }}/$img:${{ github.sha }}"
             echo "== $ref"
             docker buildx imagetools inspect "$ref" | grep -E '^(Name|MediaType|Digest):|Platform:'
@@ -366,6 +366,8 @@ jobs:
           helm upgrade --install stockpilot helm/stockpilot -n stockpilot \
             -f helm/stockpilot/values-ci.yaml \
             --set global.imageRegistry=ghcr.io/${{ github.repository_owner }} \
+            --set backend.image.repository=devops-final-project-backend \
+            --set frontend.image.repository=devops-final-project-frontend \
             --set backend.image.tag=${{ github.sha }} \
             --set frontend.image.tag=${{ github.sha }} \
             --wait --timeout 6m

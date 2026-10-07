@@ -10,7 +10,7 @@ RUN npm run build
 
 # ---- runtime stage: unprivileged nginx serves dist/ (no Node, no npm in the final image) ----
 FROM ${NGINX_IMAGE}
-LABEL org.opencontainers.image.source="https://github.com/tanishkothari9/DevOps" \
+LABEL org.opencontainers.image.source="https://github.com/tanishkothari9/devops-final-project" \
       org.opencontainers.image.title="stockpilot-frontend"
 ENV BACKEND_URL=http://backend:8000
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template

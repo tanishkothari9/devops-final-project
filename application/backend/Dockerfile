@@ -10,7 +10,7 @@ RUN python -m venv /opt/venv \
 
 # ---- runtime stage: slim image, no pip, non-root user, migrations then uvicorn ----
 FROM ${PYTHON_IMAGE}
-LABEL org.opencontainers.image.source="https://github.com/tanishkothari9/DevOps" \
+LABEL org.opencontainers.image.source="https://github.com/tanishkothari9/devops-final-project" \
       org.opencontainers.image.title="stockpilot-backend"
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/opt/venv/bin:$PATH"
 # pip is not needed at runtime and its vendored libs (urllib3, msgpack, setuptools) carry HIGH CVEs.

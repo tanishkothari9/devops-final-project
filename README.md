@@ -1,6 +1,9 @@
 # StockPilot: Final DevOps Project (Session 21)
 
 [![Final Project - StockPilot CI/CD](https://github.com/tanishkothari9/DevOps/actions/workflows/final-devops-project.yml/badge.svg)](https://github.com/tanishkothari9/DevOps/actions/workflows/final-devops-project.yml)
+[![Standalone repo CI/CD](https://github.com/tanishkothari9/devops-final-project/actions/workflows/final-devops-project.yml/badge.svg)](https://github.com/tanishkothari9/devops-final-project/actions/workflows/final-devops-project.yml)
+
+> **Standalone repository.** This is the final project on its own. It was developed inside [`tanishkothari9/DevOps` → `DevOps-main/final-devops-project`](https://github.com/tanishkothari9/DevOps/tree/main/DevOps-main/final-devops-project), and its commit history was imported here. The evidence below (pipeline run links, Argo CD `repoURL`) refers to that monorepo, where the work was done. In this repo the same pipeline runs from the root `.github/workflows/` and publishes `ghcr.io/tanishkothari9/devops-final-project-{backend,frontend}`.
 
 **StockPilot** is a small inventory-management app for a warehouse. You can track SKUs, receive and ship stock, see an audit trail of every movement, and spot items that need reordering. This repository takes it all the way through a DevOps lifecycle:
 
