@@ -18,6 +18,7 @@ provider "aws" {
       ecr = endpoints.value
       eks = endpoints.value
       iam = endpoints.value
+      kms = endpoints.value
       s3  = endpoints.value
       sts = endpoints.value
     }

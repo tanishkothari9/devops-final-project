@@ -41,7 +41,8 @@ spec:
           startupProbe:
             httpGet: {path: /health, port: http}
             periodSeconds: 3
-            failureThreshold: 20
+            timeoutSeconds: 3
+            failureThreshold: 40   # up to 2 minutes for imports + alembic on a busy node
           readinessProbe:
             httpGet: {path: /ready, port: http}
             periodSeconds: 10
@@ -49,7 +50,8 @@ spec:
           livenessProbe:
             httpGet: {path: /health, port: http}
             periodSeconds: 15
-            timeoutSeconds: 3
+            timeoutSeconds: 5
+            failureThreshold: 4
           resources:
             requests: {cpu: 50m, memory: 96Mi}
             limits: {cpu: 250m, memory: 256Mi}
