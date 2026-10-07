@@ -215,7 +215,7 @@ jobs:
         run: |
           docker build -t "$BACKEND_IMAGE:$TAG" application/backend
           docker build -t "$FRONTEND_IMAGE:$TAG" application/frontend
-          docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep stockpilot
+          docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep devops-final-project
           docker image inspect --format '{{.Architecture}}' "$BACKEND_IMAGE:$TAG"
       - name: Trivy image scan - backend
         run: |
